@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 models = []
 
-def forecast(model, year, months):
-    predict_steps = (year - 2021) * 12 + months
+def forecast(model, year, month):
+    predict_steps = (year - 2021) * 12 + month
     pred_uc = model.get_forecast(steps=predict_steps)
     return pred_uc.predicted_mean[-1]
 
