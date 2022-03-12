@@ -53,7 +53,7 @@
 <img src="./images/valid-ve.png"/>
 
 
-### Prediction 2021
+### Predictions for 2021 per category
 #### Alkoholunfälle
 <img src="./images/prediction-al.png"/>
 
