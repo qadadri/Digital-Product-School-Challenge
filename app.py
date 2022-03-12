@@ -26,9 +26,12 @@ def load_model():
     Verkehrsunfälle_model = SARIMAXResults.load('./models/model_Verkehrsunfälle.pkg')
     models = [Alkoholunfälle_model, Fluchtunfälle_model, Verkehrsunfälle_model]
 
+@app.route('/')
+def show_page():
+    return(render_template('index.html'))
 
 @app.route('/api/predict', methods=['POST'])
-def get_predictions():
+def get_predictions_api():
     data_dict = request.get_json()
     year = int(data_dict['year'])
     month = int(data_dict['month'])
@@ -40,8 +43,15 @@ def get_predictions():
     elif month < 1 or month > 12:
         return {"Error": "Month should be between 1 and 12"}, 400
     else:
-        value = prediction(year, month)
-        return {"prediction": value}, 200
-
+        result = prediction(year, month)
+        return {"prediction": result}, 200
+@app.route('/predict', methods=['POST'])
+def get_predictions_form():
+    input = request.form['date'].split("-")
+    year = int(input[0])
+    month = int(input[1])
+    result = prediction(year, month)
+    date = input[0] + '/' + input[1]
+    return (render_template('index.html', date=date, result=result))
 if __name__ == "__main__":
     app.run("0.0.0.0", 5000)
